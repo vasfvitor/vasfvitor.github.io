@@ -1,2 +1,9 @@
 node_modules/*
 *.json
+webpack.config.js
+Gruntfile.js
+Gruntfile - Copie.js
+dist/page-cr.min.js
+dist/page-cr.js
+dist/html.js
+dist/bundle.js
