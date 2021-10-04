@@ -8,8 +8,5 @@ var fifi = Math.ceil((DFIN.getTime() - today.getTime()) / (one_day))
 console.log (fifi);
 
 
-document.getElementById("mauticform_input_bzfli06fbig_fifidata").value = fifi;
-
-console.log (document.getElementById("mauticform_input_bzfli06fbig_fifidata").value);
 
 
