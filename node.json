@@ -1,22 +1,213 @@
 {
-    "glossary": {
-        "title": "example glossary",
-		"GlossDiv": {
-            "title": "S",
-			"GlossList": {
-                "GlossEntry": {
-                    "ID": "SGML",
-					"SortAs": "SGML",
-					"GlossTerm": "Standard Generalized Markup Language",
-					"Acronym": "SGML",
-					"Abbrev": "ISO 8879:1986",
-					"GlossDef": {
-                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
-						"GlossSeeAlso": ["GML", "XML"]
-                    },
-					"GlossSee": "markup"
-                }
-            }
+  "name": "test1",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        490,
+        270
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "application": "app68GX0y7dCNUS5x",
+        "table": "Tabela1",
+        "options": {}
+      },
+      "name": "Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "position": [
+        850,
+        310
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "airtableApi": {
+          "id": "3",
+          "name": "Airtable account"
         }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "list",
+        "application": "={{$node[\"Airtable\"].parameter[\"application\"]}}",
+        "table": "={{$node[\"Airtable\"].parameter[\"table\"]}}",
+        "additionalOptions": {
+          "filterByFormula": "Name='n8n'"
+        }
+      },
+      "name": "Airtable1",
+      "type": "n8n-nodes-base.airtable",
+      "position": [
+        1050,
+        310
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "airtableApi": {
+          "id": "3",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "ID"
+            }
+          ],
+          "string": [
+            {
+              "name": "Name",
+              "value": "n8n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        690,
+        170
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "Name",
+              "value": "nodemation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set1",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1250,
+        310
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "application": "={{$node[\"Airtable\"].parameter[\"application\"]}}",
+        "table": "={{$node[\"Airtable\"].parameter[\"table\"]}}",
+        "id": "={{$node[\"Airtable1\"].json[\"id\"]}}",
+        "options": {}
+      },
+      "name": "Airtable2",
+      "type": "n8n-nodes-base.airtable",
+      "position": [
+        1450,
+        310
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "airtableApi": {
+          "id": "3",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "0b23825e-65c0-4c4f-b6ed-b505e6bcbe47",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        480,
+        110
+      ],
+      "webhookId": "0b23825e-65c0-4c4f-b6ed-b505e6bcbe47"
     }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set1": {
+      "main": [
+        [
+          {
+            "node": "Airtable2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "main": [
+        [
+          {
+            "node": "Airtable1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable1": {
+      "main": [
+        [
+          {
+            "node": "Set1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {},
+  "id": 3
 }
